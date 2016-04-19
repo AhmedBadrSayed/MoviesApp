@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pref_sort_options">
+        <item> @string/pref_sort_label_mostpopular </item>
+        <item> @string/pref_sort_label_toprated </item>
+        <item> @string/pref_sort_label_favourits </item>
+    </string-array>
+
+    <string-array name="pref_sort_values">
+        <item> @string/pref_sort_value_mostpopular </item>
+        <item> @string/pref_sort_value_toprated </item>
+        <item> @string/pref_sort_value_favourits </item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,24 @@
+<component name="libraryTable">
+  <library name="realm-android-library-0.88.2">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/newsreaderExample/build/intermediates/exploded-aar/io.realm/realm-android-library/0.88.2/res" />
+      <root url="jar://$PROJECT_DIR$/newsreaderExample/build/intermediates/exploded-aar/io.realm/realm-android-library/0.88.2/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/io/realm/realm-android-library/0.88.2/realm-android-library-0.88.2-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/realm/realm-android-library/0.88.2/realm-android-library-0.88.2-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/realm/realm-android-library/0.88.2/realm-android-library-0.88.2-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/realm/realm-android-library/0.88.2/realm-android-library-0.88.2-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/realm/realm-android-library/0.88.2/realm-android-library-0.88.2-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/realm/realm-android-library/0.88.2/realm-android-library-0.88.2-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/realm/realm-android-library/0.88.2/realm-android-library-0.88.2-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/realm/realm-android-library/0.88.2/realm-android-library-0.88.2-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/realm/realm-android-library/0.88.2/realm-android-library-0.88.2-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/realm/realm-android-library/0.88.2/realm-android-library-0.88.2-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/realm/realm-android-library/0.88.2/realm-android-library-0.88.2-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/realm/realm-android-library/0.88.2/realm-android-library-0.88.2-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/realm/realm-android-library/0.88.2/realm-android-library-0.88.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/adapterExample/adapterExample.iml" filepath="$PROJECT_DIR$/adapterExample/adapterExample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/moduleExample/app/app.iml" filepath="$PROJECT_DIR$/moduleExample/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/encryptionExample/encryptionExample.iml" filepath="$PROJECT_DIR$/encryptionExample/encryptionExample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gridViewExample/gridViewExample.iml" filepath="$PROJECT_DIR$/gridViewExample/gridViewExample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/introExample/introExample.iml" filepath="$PROJECT_DIR$/introExample/introExample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jsonExample/jsonExample.iml" filepath="$PROJECT_DIR$/jsonExample/jsonExample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kotlinExample/kotlinExample.iml" filepath="$PROJECT_DIR$/kotlinExample/kotlinExample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/moduleExample/library/library.iml" filepath="$PROJECT_DIR$/moduleExample/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/migrationExample/migrationExample.iml" filepath="$PROJECT_DIR$/migrationExample/migrationExample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/moduleExample/moduleExample.iml" filepath="$PROJECT_DIR$/moduleExample/moduleExample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/newsreaderExample/newsreaderExample.iml" filepath="$PROJECT_DIR$/newsreaderExample/newsreaderExample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/realm-examples.iml" filepath="$PROJECT_DIR$/realm-examples.iml" />
+      <module fileurl="file://$PROJECT_DIR$/realmModuleExample/realmModuleExample.iml" filepath="$PROJECT_DIR$/realmModuleExample/realmModuleExample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rxJavaExample/rxJavaExample.iml" filepath="$PROJECT_DIR$/rxJavaExample/rxJavaExample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/threadExample/threadExample.iml" filepath="$PROJECT_DIR$/threadExample/threadExample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/unitTestExample/unitTestExample.iml" filepath="$PROJECT_DIR$/unitTestExample/unitTestExample.iml" />
+    </modules>
+  </component>
+</project>

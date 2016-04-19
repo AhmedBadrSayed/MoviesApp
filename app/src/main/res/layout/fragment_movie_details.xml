@@ -1,0 +1,103 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Fragments.MovieDetailsFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:background="#940d20">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/movie_tittle"
+                    android:text="The Martian"
+                    android:layout_marginLeft="40dp"
+                    android:textSize="30dp"
+                    android:textColor="#ffffff"
+                    android:layout_centerInParent="true"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp">
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="200dp"
+                    android:id="@+id/movie_image"
+                    android:src="@drawable/mar"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/movie_date"
+                    android:text="2016"
+                    android:textSize="20dp"
+                    android:layout_toRightOf="@+id/movie_image"
+                    android:layout_marginLeft="30dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/movie_rate"
+                    android:text="8.5/10"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_below="@+id/movie_date"
+                    android:layout_toRightOf="@+id/movie_image"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="15dp"/>
+
+                <ImageButton android:id="@+id/favourits"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/off"
+                    android:background="#00ffffff"
+                    android:onClick="onToggleStar"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_below="@+id/movie_rate"
+                    android:layout_toRightOf="@+id/movie_image"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/movie_descreption"
+                    android:layout_marginTop="10dp"
+                    android:textSize="15dp"
+                    android:text="Under the direction of a ruthless instructor, a talented young drummer begins to pursue perfection at any cost, even his humanity."
+                    android:textStyle="italic"
+                    android:layout_below="@+id/movie_image" />
+
+                       <ExpandableListView
+                           android:id="@+id/movies_trailers"
+                           android:layout_width="match_parent"
+                           android:layout_height="100dp"
+                           android:layout_below="@+id/movie_descreption"
+                           android:layout_marginTop="10dp"
+                           android:nestedScrollingEnabled="true"
+                           android:focusable="false"
+                           >
+                       </ExpandableListView>
+
+        </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>
