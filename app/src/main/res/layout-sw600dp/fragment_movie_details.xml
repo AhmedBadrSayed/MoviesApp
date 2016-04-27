@@ -25,7 +25,7 @@
                     android:id="@+id/movie_tittle"
                     tools:text="The Martian"
                     android:layout_marginLeft="40dp"
-                    android:textSize="30dp"
+                    android:textSize="35dp"
                     android:textColor="#ffffff"
                     android:layout_centerInParent="true"
                     />
@@ -37,8 +37,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp">
                 <ImageView
-                    android:layout_width="150dp"
-                    android:layout_height="200dp"
+                    android:layout_width="200dp"
+                    android:layout_height="270dp"
                     android:id="@+id/movie_image"
                     tools:src="@drawable/mar"
                     />
@@ -46,21 +46,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/movie_date"
-                    tools:text="2016"
-                    android:textSize="20dp"
+                    tools:text="2016-7-12"
+                    android:textSize="25dp"
                     android:layout_toRightOf="@+id/movie_image"
-                    android:layout_marginLeft="30dp"/>
+                    android:layout_marginLeft="40dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/movie_rate"
                     tools:text="8.5/10"
-                    android:textSize="20dp"
+                    android:textSize="25dp"
                     android:textStyle="bold"
                     android:layout_below="@+id/movie_date"
                     android:layout_toRightOf="@+id/movie_image"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="15dp"/>
+                    android:layout_marginLeft="47dp"
+                    android:layout_marginTop="20dp"/>
 
                 <ImageButton android:id="@+id/favourits"
                     android:layout_width="wrap_content"
@@ -68,8 +68,8 @@
                     tools:src="@drawable/off"
                     android:background="#00ffffff"
                     android:onClick="onToggleStar"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="55dp"
+                    android:layout_marginTop="25dp"
                     android:layout_below="@+id/movie_rate"
                     android:layout_toRightOf="@+id/movie_image"/>
 
@@ -78,15 +78,15 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/movie_descreption"
                     android:layout_marginTop="10dp"
-                    android:textSize="15dp"
+                    android:textSize="17.5dp"
                     tools:text="Under the direction of a ruthless instructor, a talented young drummer begins to pursue perfection at any cost, even his humanity."
-                    android:textStyle="italic"
+                    android:textStyle="bold"
                     android:layout_below="@+id/movie_image" />
 
                        <ExpandableListView
                            android:id="@+id/movies_trailers"
                            android:layout_width="match_parent"
-                           android:layout_height="100dp"
+                           android:layout_height="150dp"
                            android:layout_below="@+id/movie_descreption"
                            android:layout_marginTop="10dp"
                            android:nestedScrollingEnabled="true"

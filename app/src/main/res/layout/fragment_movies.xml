@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.MoviesFragment"
-    android:background="#c1374a">
+    android:background="#1cd1b6">
 
     <GridView
         android:layout_width="wrap_content"

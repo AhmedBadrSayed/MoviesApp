@@ -19,9 +19,7 @@ public class MainActivity extends ActionBarActivity implements MoviesFragment.mo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (findViewById(R.id.movie_details_container)!= null){
-            if (savedInstanceState == null){
                 mTwoPane = true;
-            }
         }else mTwoPane = false;
     }
 

@@ -6,8 +6,13 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
@@ -37,6 +42,7 @@ import java.util.List;
 
 public class MovieDetailsFragment extends Fragment implements View.OnClickListener {
 
+    private static final String LOG_TAG = MovieDetailsFragment.class.getSimpleName();
     String MovieDetails="", PosterPath = "", MovieTitle = "", Overview = "", VoteAverage = "", Date = "", ID = "";
     ImageButton button;
     String[] DetailsArray;
@@ -50,6 +56,34 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
     MoviesDB moviesDB;
     private static final String ARG_PARAM = null;
     private final String API_KEY = "Your_KEY";
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        MenuItem menuItem = menu.findItem(R.id.action_share);
+        ShareActionProvider mShareActionProvider =
+                (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
+
+        if (mShareActionProvider != null ) {
+            mShareActionProvider.setShareIntent(createShareForecastIntent());
+        } else {
+            Log.d(LOG_TAG, "Share Action Provider is null?");
+        }
+    }
+
+    private Intent createShareForecastIntent() {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        shareIntent.setType("text/plain");
+        try{
+            shareIntent.putExtra(Intent.EXTRA_TEXT,
+                    TrailersArray.get(0) + "\n#"+MovieTitle);
+        }catch (IndexOutOfBoundsException e){
+            Log.e(LOG_TAG, "Error ", e);
+        }
+        return shareIntent;
+    }
 
     public MovieDetailsFragment() {
     }
@@ -93,7 +127,7 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
         button.setOnClickListener(this);
         if(moviesDB.isInDataBase(MovieTitle)==true){
             button.setImageResource(R.drawable.onpress);
-        }
+        }else button.setImageResource(R.drawable.off);
         DataHeader.add("Trailers");
         DataHeader.add("Reviews");
         expandedListAdapter = new ExpandedListAdapter(getActivity(), DataHeader, DataChild);
@@ -253,9 +287,9 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
                 }
             }
             try {
-                if(params[0].equals("http://api.themoviedb.org/3/movie/"+ID+"/videos?api_key=aea0301d4dd3a66da86451e23e07d859"))
+                if(params[0].equals("http://api.themoviedb.org/3/movie/"+ID+"/videos?api_key="+API_KEY))
                     return getTrailersFromJson(MoviesData);
-                else if(params[0].equals("http://api.themoviedb.org/3/movie/"+ID+"/reviews?api_key=aea0301d4dd3a66da86451e23e07d859"))
+                else if(params[0].equals("http://api.themoviedb.org/3/movie/"+ID+"/reviews?api_key="+API_KEY))
                     return getReviewsFromJson(MoviesData);
             } catch (JSONException e) {
                 e.printStackTrace();
