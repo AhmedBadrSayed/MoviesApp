@@ -55,7 +55,7 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
     ArrayList<String> TrailersArray, ReviewsArray, TrailerI, ReviewI;
     MoviesDB moviesDB;
     private static final String ARG_PARAM = null;
-    private final String API_KEY = "Your_KEY";
+    private final String API_KEY = "Your_Key";
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
