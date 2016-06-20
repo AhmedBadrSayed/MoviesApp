@@ -3,7 +3,6 @@ package com.projects.ahmedbadr.moviesapp.Fragments;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
@@ -24,21 +23,19 @@ import com.projects.ahmedbadr.moviesapp.Adapters.ExpandedListAdapter;
 import com.projects.ahmedbadr.moviesapp.DataStore.MoviesDB;
 import com.projects.ahmedbadr.moviesapp.R;
 import com.projects.ahmedbadr.moviesapp.Activities.Reviews;
+import com.projects.ahmedbadr.moviesapp.Service.APIModel;
+import com.projects.ahmedbadr.moviesapp.Service.ServiceBuilder;
+import com.projects.ahmedbadr.moviesapp.Service.ServiceInterfaces;
+import com.projects.ahmedbadr.moviesapp.Utilities.Constants;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MovieDetailsFragment extends Fragment implements View.OnClickListener {
 
@@ -55,7 +52,6 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
     ArrayList<String> TrailersArray, ReviewsArray, TrailerI, ReviewI;
     MoviesDB moviesDB;
     private static final String ARG_PARAM = null;
-    private final String API_KEY = "Your_Key";
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -66,13 +62,13 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
                 (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
 
         if (mShareActionProvider != null ) {
-            mShareActionProvider.setShareIntent(createShareForecastIntent());
+            mShareActionProvider.setShareIntent(createShareFavoriteIntent());
         } else {
             Log.d(LOG_TAG, "Share Action Provider is null?");
         }
     }
 
-    private Intent createShareForecastIntent() {
+    private Intent createShareFavoriteIntent() {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         shareIntent.setType("text/plain");
@@ -116,14 +112,12 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
             viewAdapter(getArguments().getString(ARG_PARAM));
         }
         moviesDB = new MoviesDB(getActivity());
-        TrailersArray = new ArrayList<String>();
-        ReviewsArray = new ArrayList<String>();
-        DataHeader = new ArrayList<String>();
-        DataChild = new HashMap<String, List<String>>();
-        TrailerI = new ArrayList<String>();
-        ReviewI = new ArrayList<String>();
-        final String TRAILERS_URL = "http://api.themoviedb.org/3/movie/"+ID+"/videos?api_key="+API_KEY;
-        final String REVIEWS_URL = "http://api.themoviedb.org/3/movie/"+ID+"/reviews?api_key="+API_KEY;
+        TrailersArray = new ArrayList<>();
+        ReviewsArray = new ArrayList<>();
+        DataHeader = new ArrayList<>();
+        DataChild = new HashMap<>();
+        TrailerI = new ArrayList<>();
+        ReviewI = new ArrayList<>();
         button.setOnClickListener(this);
         if(moviesDB.isInDataBase(MovieTitle)==true){
             button.setImageResource(R.drawable.onpress);
@@ -131,10 +125,8 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
         DataHeader.add("Trailers");
         DataHeader.add("Reviews");
         expandedListAdapter = new ExpandedListAdapter(getActivity(), DataHeader, DataChild);
-        getTrailersAndReviews get_trailers = new getTrailersAndReviews();
-        getTrailersAndReviews get_reviews = new getTrailersAndReviews();
-        get_trailers.execute(TRAILERS_URL);
-        get_reviews.execute(REVIEWS_URL);
+        PerformTrailersCall(ID);
+        PerformReviewsCall(ID);
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
@@ -157,6 +149,57 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
             }
         });
         return rootview;
+    }
+
+    void PerformTrailersCall(String movieID){
+        ServiceBuilder builder = new ServiceBuilder();
+        ServiceInterfaces.Trailers trailers = builder.BuildTrailers();
+        Call<APIModel> apiModelCall = trailers.getTrailers(movieID, Constants.API_KEY);
+        apiModelCall.enqueue(new Callback<APIModel>() {
+            @Override
+            public void onResponse(Call<APIModel> call, Response<APIModel> response) {
+                for (int i=0 ; i<response.body().MoviesList.size() ; i++){
+                    TrailersArray.add(i, Constants.TRAILERS_BASIC_URL + response.body().MoviesList.get(i).key);
+                }
+
+                TrailerI = new ArrayList<>(TrailersArray.size());
+                for(int i=0 ; i<TrailersArray.size() ; i++){
+                    TrailerI.add(i, "Trailer " + (i + 1));
+                }
+                DataChild.put(DataHeader.get(0), TrailerI);
+                expandableListView.setAdapter(expandedListAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<APIModel> call, Throwable t) {
+                Log.v("Retrieve Error", t.toString());
+            }
+        });
+    }
+
+    void PerformReviewsCall(String movieID){
+        ServiceBuilder builder = new ServiceBuilder();
+        ServiceInterfaces.Reviews reviews = builder.BuildReviews();
+        Call<APIModel> apiModelCall = reviews.getReviews(movieID, Constants.API_KEY);
+        apiModelCall.enqueue(new Callback<APIModel>() {
+            @Override
+            public void onResponse(Call<APIModel> call, Response<APIModel> response) {
+                for (int i=0 ; i<response.body().MoviesList.size() ; i++){
+                    ReviewsArray.add(i, response.body().MoviesList.get(i).content);
+                }
+                ReviewI = new ArrayList<>(ReviewsArray.size());
+                for(int i=0 ; i<ReviewsArray.size() ; i++) {
+                    ReviewI.add(i, "Review " + (i + 1));
+                }
+                DataChild.put(DataHeader.get(1), ReviewI);
+                expandableListView.setAdapter(expandedListAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<APIModel> call, Throwable t) {
+                Log.v("Retrieve Error", t.toString());
+            }
+        });
     }
 
     public void viewAdapter(String movieDetails) {
@@ -199,117 +242,4 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
         }
     }
 
-    public class getTrailersAndReviews extends AsyncTask<String, Void, ArrayList<String>> {
-        private final String LOG_TAG = MovieDetailsFragment.class.getSimpleName();
-
-        private ArrayList<String> getTrailersFromJson(String TrailersJson) throws JSONException {
-
-            final String TMDB_RESULTS = "results";
-            final String TMDB_KEY = "key";
-            final String BASIC_URL = "https://www.youtube.com/watch?v=";
-            String key = "";
-
-            JSONObject Trailers_json = new JSONObject(TrailersJson);
-            JSONArray MoviesArray = Trailers_json.getJSONArray(TMDB_RESULTS);
-
-            for (int i = 0; i < MoviesArray.length(); i++) {
-                // Get the JSON object representing the movie
-                JSONObject TrailersData = MoviesArray.getJSONObject(i);
-                key = TrailersData.getString(TMDB_KEY);
-                TrailersArray.add(i, BASIC_URL + key);
-            }
-            return TrailersArray;
-        }
-
-        private ArrayList<String> getReviewsFromJson(String ReviewsJson) throws JSONException {
-
-            final String TMDB_RESULTS = "results";
-            final String TMDB_CONTENT = "content";
-            String content = "";
-
-            JSONObject Reviews_json = new JSONObject(ReviewsJson);
-            JSONArray MoviesArray = Reviews_json.getJSONArray(TMDB_RESULTS);
-
-            for (int i = 0; i < MoviesArray.length(); i++) {
-                // Get the JSON object representing the movie
-                JSONObject ReviewsData = MoviesArray.getJSONObject(i);
-                content = ReviewsData.getString(TMDB_CONTENT);
-                ReviewsArray.add(i, content);
-            }
-            return ReviewsArray;
-        }
-
-        @Override
-        protected ArrayList<String> doInBackground(String... params) {
-            HttpURLConnection urlConnection = null;
-            String MoviesData = null;
-            BufferedReader reader = null;
-
-            try {
-                URL url = new URL(params[0]);
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();
-
-                InputStream inputStream = urlConnection.getInputStream();
-                StringBuffer buffer = new StringBuffer();
-                if (inputStream == null) {
-                    System.out.println("Empty Json");
-                    return null;
-                }
-                reader = new BufferedReader(new InputStreamReader(inputStream));
-                String line;
-                while ((line = reader.readLine()) != null) {
-
-                    buffer.append(line + "\n");
-
-                }
-                if (buffer.length() == 0) {
-                    return null;
-                }
-
-                MoviesData = buffer.toString();
-
-                Log.v(LOG_TAG, "Movies string: " + MoviesData);
-            } catch (IOException e) {
-                Log.e(LOG_TAG, "Error ", e);
-                return null;
-            } finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    } catch (final IOException e) {
-                        Log.e(LOG_TAG, "Error closing stream", e);
-                    }
-                }
-            }
-            try {
-                if(params[0].equals("http://api.themoviedb.org/3/movie/"+ID+"/videos?api_key="+API_KEY))
-                    return getTrailersFromJson(MoviesData);
-                else if(params[0].equals("http://api.themoviedb.org/3/movie/"+ID+"/reviews?api_key="+API_KEY))
-                    return getReviewsFromJson(MoviesData);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<String> strings) {
-            TrailerI = new ArrayList<String>(TrailersArray.size());
-            ReviewI = new ArrayList<String>(ReviewsArray.size());
-            for(int i=0 ; i<TrailersArray.size() ; i++){
-                TrailerI.add(i, "Trailer " + (i + 1));
-            }
-            for(int i=0 ; i<ReviewsArray.size() ; i++) {
-                ReviewI.add(i, "Review " + (i + 1));
-            }
-            DataChild.put(DataHeader.get(0), TrailerI);
-            DataChild.put(DataHeader.get(1), ReviewI);
-            expandableListView.setAdapter(expandedListAdapter);
-        }
-    }
 }

@@ -14,8 +14,8 @@
     <string name="pref_sort_label_favourits">Favorites</string>
 
 
-    <string name="pref_sort_value_mostpopular" translatable="false">http://api.themoviedb.org/3/movie/popular?api_key=Your_Key</string>
-    <string name="pref_sort_value_toprated" translatable="false">http://api.themoviedb.org/3/movie/top_rated?api_key=Your_Key</string>
+    <string name="pref_sort_value_mostpopular" translatable="false">popular</string>
+    <string name="pref_sort_value_toprated" translatable="false">top_rated</string>
     <string name="pref_sort_value_favourits" translatable="false">favorites</string>
     <string name="title_activity_splash">MoviesBox</string>
     <string name="action_share">Share</string>
